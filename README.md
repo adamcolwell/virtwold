@@ -23,6 +23,26 @@ The daemon will keep running until killed with a SIGINT (`^c`).
 
 Because this daemon, and wake-on-LAN, operate by MAC addresses, any VMs that are a candidate to be woken must have a hard-coded MAC in their machine configuration.
 
+## Nix
+
+```sh
+nix build
+nix run . -- --interface eth0 --libvirturi qemu:///system
+nix develop
+```
+
+A NixOS module is exported as `nixosModules.default`:
+
+```nix
+{
+  services.virtwold = {
+    enable = true;
+    interfaces = [ "br0" ];
+    libvirtUri = "qemu:///system";
+  };
+}
+```
+
 ## System Integration
 
 ### systemd example service
